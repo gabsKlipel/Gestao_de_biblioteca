@@ -1,0 +1,15 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Cadastro de Livros
+{%endblock%}
+
+{%block main%}
+<div>
+    <form method = 'post'>
+        {% csrf_token %}
+            
+        {{form.as_p}}
+    </form>
+</div>
+{%endblock%}
