@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import livroForms
 
 # Create your views here.
@@ -20,5 +20,6 @@ def cadastrar_livro(request):
         form = livroForms(request.POST)
         if form.is_valid():
             titulo = form.cleaned_data['titulo']
+            return redirect('index')
 
     return render(request, "cadastrar_livro")
