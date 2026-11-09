@@ -6,7 +6,7 @@ Cadastro de Livros
 
 {%block main%}
 <div>
-    <form method = 'post'>
+    <form method = 'POST'>
         {% csrf_token %}
             
         {{form.as_p}}

@@ -1,5 +1,36 @@
 from django import forms
-from .models import Livro
+from .models import Livro, Usuario
+
+class UsuarioForms(forms.ModelForm):
+    class meta:
+        model = Usuario
+        fiels = [
+            'nome',
+            'CPF',
+            'telefone',
+            'endereco'
+        ]
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class' : 'form-control text-red',
+                'placeholder' : 'digite seu nome'
+            }),
+
+            'CPF': forms.TextInput(attrs={
+                'class': 'form-control text-red',
+                'placeholder': 'digite seu cpf'
+            }),
+
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control text-red',
+                'placeholder': 'digite seu telefone'
+            }),
+
+            'endereco': forms.TextInput(attrs={
+                'class': 'form-control text-red',
+                'placeholder': 'digite seu endereco'
+            })
+        }
 
 class livroForms(forms.ModelForm):
     class meta:

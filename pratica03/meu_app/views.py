@@ -22,4 +22,8 @@ def cadastrar_livro(request):
             titulo = form.cleaned_data['titulo']
             return redirect('index')
 
-    return render(request, "cadastrar_livro")
+    return render(request, "cadastrar_livro.html", dados)
+
+def cadastrar_usuario(request):
+     
+    return render(request, "cadastrar_usuario.html")

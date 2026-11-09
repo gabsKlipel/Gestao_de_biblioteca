@@ -14,3 +14,12 @@ class Livro (models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Usuario(models.Model):
+    nome = models.CharField(max_length = 100),
+    CPF = models.CharField(max_length = 11),
+    telefone = models.CharField(max_length = 100),
+    endereco = models.CharField(max_length= 100)
+
+    def __str__(self):
+        return self.nome

@@ -1,0 +1,17 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Cadastro de Usuário
+{%endblock%}
+
+{%block main%}
+<div class = >
+
+    <form method = 'POST'>
+        {% csrf_token %}
+            
+        {{forms.as_p}}
+    </form>
+    
+</div>
+{%endblock%}
