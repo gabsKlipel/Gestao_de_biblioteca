@@ -1,10 +1,12 @@
 from django import forms
-from .models import Livro, Usuario
+from .models import Livro
+from .models import Cliente
 
-class UsuarioForms(forms.ModelForm):
-    class meta:
-        model = Usuario
-        fiels = [
+
+class ClienteForms(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = [
             'nome',
             'CPF',
             'telefone',
@@ -12,8 +14,8 @@ class UsuarioForms(forms.ModelForm):
         ]
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class' : 'form-control text-red',
-                'placeholder' : 'digite seu nome'
+                'class': 'form-control text-red',
+                'placeholder': 'digite seu nome'
             }),
 
             'CPF': forms.TextInput(attrs={
@@ -32,8 +34,9 @@ class UsuarioForms(forms.ModelForm):
             })
         }
 
+
 class livroForms(forms.ModelForm):
-    class meta:
+    class Meta:
         model = Livro
         fields = [
             'titulo',

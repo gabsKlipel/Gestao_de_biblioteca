@@ -5,12 +5,14 @@ Cadastro de Usuário
 {%endblock%}
 
 {%block main%}
-<div class = >
+<div>
 
     <form method = 'POST'>
         {% csrf_token %}
-            
-        {{forms.as_p}}
+
+        {{formulario.as_p}}
+
+        <button type="submit">Cadastrar</button>
     </form>
     
 </div>
