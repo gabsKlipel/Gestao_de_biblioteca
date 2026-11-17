@@ -10,6 +10,10 @@
             <p class="mensagem-error">{{ mensagem }}</p>
         {% endif %}
 
+         {% if mensagem.tags == 'warning' %}
+            <p class="mensagem-warning">{{ mensagem }}</p>
+        {% endif %}
+
     {% endfor %}
 
 {% endif %}

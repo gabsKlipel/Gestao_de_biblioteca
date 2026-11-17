@@ -1,7 +1,10 @@
 <nav>
     <div>
         <a href= "{%url 'index'%}"> Inicio </a> |
-        <a href="{% url 'cadastrar_livro' %}"> Cadastrar Livro </a> 
-        <a href="{% url 'listar_livros' %}"> Listar Livros </a>
+        <a href= "{%url 'cadastrar_usuario'%}">Cadastrar Usuario</a> |
+        <a href="{% url 'cadastrar_livro' %}"> Cadastrar Livro </a> |
+        <a href="{%url 'cadastrar_cliente'%}">Cadastrar_cliente</a> |
+        <a href="{% url 'listar_livros' %}"> Listar Livros </a> |
+        <a href="{%url 'livros_inativos'%}">Livros inativados</a> |
     </div>
 </nav>

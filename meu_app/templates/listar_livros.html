@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href=" {% static "css/style.css" %}">
-    <title> Listar Funcionarios </title>
+    <title> Listar Livros </title>
 </head>
 <body>
 
@@ -14,17 +14,17 @@
 
     {% include '_mensagem.html' %}
 
-    <div class="form-pesquisa nao-imprimir">
+    <div>
         <form method="GET"> 
-            <input type="text" name="nome_da_pesquisa" placeholder="Pesquisar funcionário" value='{{ nome_da_pesquisa }}'> 
+            <input type="text" name="nome_da_pesquisa" placeholder="Pesquisar livro" value='{{ nome_da_pesquisa }}'> 
             <button type="submit">Pesquisar</button> 
         </form>
     </div>
 
 
-    <h1> Lista de Funcionários </h1>
+    <h1> Lista de Livros </h1>
 
-    <div class="lista-funcionario">
+    <div class="lista-livro">
         <table border="">
             <thead>
                 <tr>
@@ -48,6 +48,24 @@
                     <td>{{ livro.isbn }}</td>
                     <td>{{ livro.genero }}</td>
                     <td>{{ livro.quantidade }}</td>
+
+                    <td>
+                        <form action="{% url 'devolver_livro' livro.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">
+                        Devolver
+                        </button>
+                         </form>
+                    </td>
+                    <td>
+                        <a href="{% url 'emprestar_livro' livro.id %}">Emprestar</a>
+                        <a href="{%url 'editar_livro' livro.id%}">Editar</a>
+                        <a href="{% url 'desativar_livro' livro.id%}">Desativar Livro</a>
+                    </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
+        </table>
+    </div>
+</body>

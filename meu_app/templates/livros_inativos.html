@@ -1,0 +1,48 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Livros desativados
+{%endblock%}
+
+{%block main%}
+    <body>
+
+        <h1>Lista de Livros Inativados</h1>
+
+        <div class="lista-livro"> 
+            <table border= "">
+                <thead>
+                    <tr>
+                        <th><a href="?ordem=titulo">Título</a></th>
+                        <th><a href="?ordem=autor">Autor</a></th>
+                        <th><a href="?ordem=editora">Editora</a></th>
+                        <th><a href="?ordem=ano_publicacao">Ano de Publicação</a></th>
+                        <th><a href="?ordem=isbn">ISBN</a></th>
+                        <th><a href="?ordem=genero">Gênero</a></th>
+                        <th><a href="?ordem=quantidade">Quantidade</a></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {%for livro in livros%}
+                        <tr>
+                            <td>{{ livro.titulo }}</td>
+                            <td>{{ livro.autor }}</td>
+                            <td>{{ livro.editora }}</td>
+                            <td>{{ livro.ano_publicacao }}</td>
+                            <td>{{ livro.isbn }}</td>
+                            <td>{{ livro.genero }}</td>
+                            <td>{{ livro.quantidade }}</td>
+
+                            <td>
+                                <a href = "{%url 'ativar_livro' livro.id%}">Ativar Livro</a>
+                                <a href = "{%url 'excluir_livro' livro.id%}">Excluir Livro</a>
+                            </td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        
+    </body>
+{%endblock%}

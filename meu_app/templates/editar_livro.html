@@ -1,0 +1,19 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Cadastro de Usuário
+{%endblock%}
+
+{%block main%}
+<div>
+
+    <form method = 'POST'>
+        {% csrf_token %}
+
+        {{formulario.as_p}}
+
+        <button type="submit">Salvar</button>
+    </form>
+    
+</div>
+{%endblock%}

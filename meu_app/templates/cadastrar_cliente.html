@@ -1,0 +1,19 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Cadastrar Cliente
+{%endblock%}
+
+{%block main%}
+
+    <h1>Cadastro de clientes</h1>
+    <div>
+        <form method = 'post'>
+            {% csrf_token %}
+
+            {{formulario.as_p}}
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+{%endblock%}
