@@ -22,4 +22,5 @@ urlpatterns = [
     path('ativar_cliente/<int:id>/', views.ativar_cliente, name= 'ativar_cliente'),
     path('cadastrar_funcionario/', views.cadastrar_funcionario, name='cadastrar_funcionario'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', views.sair, name='logout'),
 ]

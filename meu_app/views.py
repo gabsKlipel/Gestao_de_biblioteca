@@ -5,6 +5,10 @@ from .models import Livro, Emprestimo, Cliente
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import logout
 
 # Create your views here.
 
@@ -14,6 +18,7 @@ def index(request):
     return render(request, "index.html")
 
 
+@login_required
 def cadastrar_livro(request):
     form = livroForms()
 
@@ -37,6 +42,7 @@ def cadastrar_livro(request):
     return render(request, "cadastrar_livro.html", dados)
 
 
+@login_required
 def listar_livros(request):
     ordem = request.GET.get('ordem', 'titulo')
     nome_da_pesquisa = request.GET.get('pesquisa', '')
@@ -55,6 +61,7 @@ def listar_livros(request):
     return render(request, "listar_livros.html", dados)
 
 
+@login_required
 def devolver_livro(request, id):
     livro = Livro.objects.get(id=id)
 
@@ -77,6 +84,7 @@ def devolver_livro(request, id):
     return render(request, 'listar_livros.html')
 
 
+@login_required
 def emprestar_livro(request, id):
     livro = Livro.objects.get(id=id)
 
@@ -113,6 +121,7 @@ def emprestar_livro(request, id):
     return render(request, 'emprestar_livro.html', {'livro': livro})
 
 
+@login_required
 def editar_livro(request, id):
     livro = Livro.objects.get(id=id)
 
@@ -137,6 +146,7 @@ def editar_livro(request, id):
     return render(request, 'editar_livro.html', dados)
 
 
+@login_required
 def desativar_livro(request, id):
     livro = Livro.objects.get(id=id)
     titulo = livro.titulo
@@ -148,6 +158,7 @@ def desativar_livro(request, id):
     return redirect('listar_livros')
 
 
+@login_required
 def ativar_livro(request, id):
     livro = Livro.objects.get(id=id)
     titulo = livro.titulo
@@ -159,6 +170,7 @@ def ativar_livro(request, id):
     return redirect('listar_livros')
 
 
+@login_required
 def livros_inativos(request):
     livro = Livro.objects.filter(
         ativo=False
@@ -169,6 +181,7 @@ def livros_inativos(request):
     return render(request, 'livros_inativos.html', dados)
 
 
+@login_required
 def excluir_livro(request, id):
     livro = Livro.objects.get(id=id)
     titulo = livro.titulo
@@ -182,6 +195,7 @@ def excluir_livro(request, id):
     return redirect('listar_livros')
 
 
+@login_required
 def cadastrar_cliente(request):
     form = clienteForms()
 
@@ -205,6 +219,7 @@ def cadastrar_cliente(request):
     return render(request, "cadastrar_cliente.html", dados)
 
 
+@login_required
 def listar_cliente(request):
     ordem = request.GET.get('ordem', 'nome')
     nome_da_pesquisa = request.GET.get('pesquisa', '')
@@ -223,6 +238,7 @@ def listar_cliente(request):
     return render(request, "listar_cliente.html", dados)
 
 
+@login_required
 def desativar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     nome = cliente.nome
@@ -234,6 +250,7 @@ def desativar_cliente(request, id):
     return redirect('listar_cliente')
 
 
+@login_required
 def clientes_inativos(request):
     cliente = Cliente.objects.filter(
         ativo=False
@@ -244,6 +261,7 @@ def clientes_inativos(request):
     return render(request, 'clientes_inativos.html', dados)
 
 
+@login_required
 def ativar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     nome = cliente.nome
@@ -255,6 +273,7 @@ def ativar_cliente(request, id):
     return redirect('listar_cliente')
 
 
+@login_required
 def editar_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
 
@@ -279,6 +298,7 @@ def editar_cliente(request, id):
     return render(request, 'editar_livro.html', dados)
 
 
+@login_required
 def excluir_cliente(request, id):
     cliente = Cliente.objects.get(id=id)
     nome = cliente.nome
@@ -287,6 +307,7 @@ def excluir_cliente(request, id):
     return redirect('listar_cliente')
 
 
+@staff_member_required
 def cadastrar_funcionario(request):
     if request.method == 'POST':
         formulario_de_usuario = UserCreationForm(request.POST)
@@ -304,3 +325,11 @@ def cadastrar_funcionario(request):
         'formulario': formulario_de_usuario
     }
     return render(request, "cadastrar_funcionario.html", dados)
+
+
+def sair(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')
+    else:
+        return redirect('index')
