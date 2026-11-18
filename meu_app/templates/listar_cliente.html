@@ -1,0 +1,45 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Lista de Clientes
+{%endblock%}
+
+{%block main%}
+
+    <div class = "form-pesquisa">
+        <form method="GET"> 
+            <input type="text" name="nome_da_pesquisa" placeholder="Pesquisar Cliente" value='{{ nome_da_pesquisa }}'> 
+            <button type="submit">Pesquisar</button> 
+        </form>
+    </div>
+
+    <h1>Lista de Clientes</h1>
+
+    <div>
+        <table border = "">
+            <thead>
+                <tr>
+                    <th><a href="?ordem=nome">Nome</a></th>
+                    <th><a href="?ordem=cpf">CPF</a></th>
+                    <th><a href="?ordem=telefone">Telefone</a></th>
+                    <th><a href="?ordem=endereco">Endereco</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for cliente in clientes%}
+                <tr>
+                    <td>{{ cliente.nome }}</td>
+                    <td>{{ cliente.cpf }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.endereco }}</td>
+
+                    <td>
+                        <a href = "{%url 'desativar_cliente' cliente.id%}">Desativar Cliente</a>
+                        <a href = "{%url 'editar_cliente' cliente.id%}">Editar Cliente</a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+{%endblock%}

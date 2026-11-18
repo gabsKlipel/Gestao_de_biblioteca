@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import livroForms, clienteForms
 from django.contrib import messages
-from .models import Livro, Emprestimo
+from .models import Livro, Emprestimo, Cliente
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
@@ -205,7 +205,89 @@ def cadastrar_cliente(request):
     return render(request, "cadastrar_cliente.html", dados)
 
 
-def cadastrar_usuario(request):
+def listar_cliente(request):
+    ordem = request.GET.get('ordem', 'nome')
+    nome_da_pesquisa = request.GET.get('pesquisa', '')
+
+    cliente = Cliente.objects.filter(
+        nome__icontains=nome_da_pesquisa,
+        ativo=True
+
+    ).order_by(ordem)
+
+    dados = {
+        'clientes': cliente,
+        nome_da_pesquisa: nome_da_pesquisa,
+    }
+
+    return render(request, "listar_cliente.html", dados)
+
+
+def desativar_cliente(request, id):
+    cliente = Cliente.objects.get(id=id)
+    nome = cliente.nome
+    cliente.ativo = False
+    cliente.save()
+    messages.success(
+        request, f'{cliente} foi desativado com sucesso'
+    )
+    return redirect('listar_cliente')
+
+
+def clientes_inativos(request):
+    cliente = Cliente.objects.filter(
+        ativo=False
+    )
+    dados = {
+        'clientes': cliente
+    }
+    return render(request, 'clientes_inativos.html', dados)
+
+
+def ativar_cliente(request, id):
+    cliente = Cliente.objects.get(id=id)
+    nome = cliente.nome
+    cliente.ativo = True
+    cliente.save()
+    messages.success(
+        request, f'{nome} foi ativado com sucesso'
+    )
+    return redirect('listar_cliente')
+
+
+def editar_cliente(request, id):
+    cliente = Cliente.objects.get(id=id)
+
+    form = clienteForms(instance=cliente)
+
+    if request.method == 'POST':
+
+        form = clienteForms(request.POST, instance=cliente)
+
+        if form.is_valid():
+            form.save()
+            nome = form.cleaned_data['nome']
+
+            mensagem_confirmacao = f'livro {nome} alterado com sucesso!'
+            messages.success(request, mensagem_confirmacao)
+
+            return redirect('listar_cliente')
+
+    dados = {
+        'formulario': form
+    }
+    return render(request, 'editar_livro.html', dados)
+
+
+def excluir_cliente(request, id):
+    cliente = Cliente.objects.get(id=id)
+    nome = cliente.nome
+    cliente.delete()
+    messages.success(request, f'{nome} excluido com sucesso')
+    return redirect('listar_cliente')
+
+
+def cadastrar_funcionario(request):
     if request.method == 'POST':
         formulario_de_usuario = UserCreationForm(request.POST)
 
@@ -213,12 +295,12 @@ def cadastrar_usuario(request):
             formulario_de_usuario.save()
             usuario = formulario_de_usuario.cleaned_data['username']
             messages.success(
-                request, f'Usuário {usuario} cadastrado com sucesso!')
-            return redirect('cadastrar_usuario')
+                request, f'Funcionario {usuario} cadastrado com sucesso!')
+            return redirect('cadastrar_funcionario')
     else:
         formulario_de_usuario = UserCreationForm()
 
     dados = {
         'formulario': formulario_de_usuario
     }
-    return render(request, "cadastrar_usuario.html", dados)
+    return render(request, "cadastrar_funcionario.html", dados)

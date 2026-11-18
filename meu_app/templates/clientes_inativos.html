@@ -1,0 +1,41 @@
+{%extends '_base.html'%}
+
+{%block titulo%}
+Clientes desativados
+{%endblock%}
+
+{%block main%}
+    <body>
+
+        <h1>Lista de Clientes Inativados</h1>
+
+        <div> 
+            <table border= "">
+                <thead>
+                    <tr>
+                        <th><a href="?ordem=nome">Nome</a></th>
+                        <th><a href="?ordem=cpf">CPF</a></th>
+                        <th><a href="?ordem=telefone">Telefone</a></th>
+                        <th><a href="?ordem=endereco">Endereço</a></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {%for cliente in clientes%}
+                        <tr>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.cpf }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.endereco }}</td>
+
+                            <td>
+                                <a href = "{%url 'ativar_cliente' cliente.id%}">Ativar Cliente</a>
+                                <a href = "{%url 'excluir_cliente' cliente.id%}">Excluir Cliente</a>
+                            </td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </body>
+{%endblock%}

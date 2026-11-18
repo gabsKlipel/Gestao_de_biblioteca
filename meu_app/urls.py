@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -13,5 +14,12 @@ urlpatterns = [
     path('excluir_livro/<int:id>/', views.excluir_livro, name='excluir_livro'),
     path('livros_inativos/', views.livros_inativos, name='livros_inativos'),
     path('cadastrar_cliente/', views.cadastrar_cliente, name='cadastrar_cliente'),
-    path('cadastrar_usuario/', views.cadastrar_usuario, name='cadastrar_usuario')
+    path('listar_cliente/', views.listar_cliente, name= 'listar_cliente'),
+    path('desativar_cliente/<int:id>/', views.desativar_cliente, name= 'desativar_cliente'),
+    path('clientes_inativos/', views.clientes_inativos, name= 'clientes_inativos'),
+    path('excluir_cliente/<int:id>/', views.excluir_cliente, name= 'excluir_cliente'),
+    path('editar_cliente/<int:id>/', views.editar_cliente, name= 'editar_cliente'),
+    path('ativar_cliente/<int:id>/', views.ativar_cliente, name= 'ativar_cliente'),
+    path('cadastrar_funcionario/', views.cadastrar_funcionario, name='cadastrar_funcionario'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
 ]
